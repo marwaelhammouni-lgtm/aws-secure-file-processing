@@ -40,6 +40,7 @@ aws-secure-file-processing/
 ├── .gitignore
 ├── LICENSE
 └── README.md
+
 ```
 
 ## 4. Installation et tests locaux
