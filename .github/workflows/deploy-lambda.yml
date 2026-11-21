@@ -1,0 +1,40 @@
+
+name: AWS Lambda Deployment - Prepared
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deployment:
+    name: Prepare Lambda deployment
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get repository code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+
+      - name: Run tests
+        run: python -m pytest -v
+
+      - name: Prepare Lambda ZIP
+        run: |
+          cd src
+          zip -j ../lambda-deployment.zip lambda_function.py
+
+      - name: Deployment not activated
+        run: |
+          echo "AWS deployment is not configured yet."
+          echo "No AWS resources have been modified."
